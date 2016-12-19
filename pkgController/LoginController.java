@@ -11,11 +11,10 @@ import org.controlsfx.control.PopOver;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.TextField;
 import javafx.util.Duration;
 import main.ApplicationLoader;
 import pkgDAO.AEScryption;
-import pkgDAO.ConnectDAO;
+import pkgDAO.DAOfunctions;
 import pkgModel.Customer;
 import pkgView.LoginPane;
 import pkgView.ResetPane;
@@ -30,9 +29,9 @@ public class LoginController {
 
 	private ResetPane resetpane;
 	private LoginPane loginpane;
-	private List<Customer> model;
+	private ResetController resetcontroller;
 	private static Connection myConnection;
-	private static ConnectDAO connectdao;
+	private static DAOfunctions connectdao;
 	private String user, password, selectedLevelUser;
 	private ApplicationLoader applicationLoader;
 	private static String encryptedpassword; // not yet used until isuser is
@@ -44,47 +43,38 @@ public class LoginController {
 	ResultSet resultSet;
 
 	public LoginController(ApplicationLoader applicationLoader, LoginPane view, List<Customer> model) {
-		// this.resetpane = resetpane;
+		
 		this.loginpane = view;
-		this.model = model;
 		this.applicationLoader = applicationLoader;
 		this.attachEventHandlers();
 	}
 
 	private void attachEventHandlers() {
-    	
-        loginpane.AttachLogin_Button_Handler(new LoginButtonHandler());
-        
-        
-        /*
-         * Instead of defining a private inner class for the password reset button
-         * in the LoginPane, the process is being delegated to a lambda expression 
-         * to just switch to the popover screen for reseting a new password. Elegance 
-         */
-        loginpane.getForgotPasswordButton().setOnAction(e -> {  PopOver popover = new PopOver();     
-        														resetpane = new ResetPane();   
-        														popover.setContentNode(resetpane);
-        														popover.show(loginpane.getForgotPasswordButton());
-        														;});
-        } //Zilambda pfe
+		loginpane.AttachLogin_Button_Handler(new LoginButtonHandler());
 
-	/*
-	 * Instead of doing fresh connection to the database every time you need to
-	 * use a controller use the static method to pass on the connection around
-	 * the event handlers that way the user will need to connect once to the
-	 * database.
-	 */
-	public static final Connection passOntheBallDidier() {
-		return myConnection;
+		/*
+		 * Instead of defining a private inner class for the password reset
+		 * button in the LoginPane, the process is being delegated to a lambda
+		 * expression to just switch to the popover screen for reseting a new
+		 * password. Elegance
+		 */
+		loginpane.getForgotPasswordButton().setOnAction(e -> {
+			PopOver popover = new PopOver();
+			resetpane = new ResetPane();
+			resetcontroller = new ResetController(applicationLoader, loginpane, resetpane, null);
+			popover.setContentNode(resetpane);
+			popover.show(loginpane.getForgotPasswordButton());
+		});
 	}
 
-	/**********************************
-	 * INNER CLASS ACTING AS A CALLBACK
-	 **********************************/
+	/*
+	 * An Inner class utilised as a callback
+	 */
 
 	private class LoginButtonHandler implements EventHandler<ActionEvent> {
 
 		public void handle(ActionEvent event) {
+
 			user = loginpane.getUserName();
 			password = loginpane.getPassWord();
 			selectedLevelUser = loginpane.getSelectedUserLevel();
@@ -92,48 +82,23 @@ public class LoginController {
 			try {
 				encryptedpassword = AEScryption.encrypt(password);
 			} catch (Exception e2) {
-				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
 
-			// print statement just to check whether we were successfully
-			// collecting the information entered by the usr for authentication.
-			try {
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block.
-				e.printStackTrace();
-			}
-
-			connectdao = new ConnectDAO();
-
-			try {
-				myConnection = connectdao.connectDB();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block.
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block.
-				e1.printStackTrace();
-			}
+			connectdao = new DAOfunctions();
 
 			isAuthenticated = connectdao.isUser(user, encryptedpassword, selectedLevelUser);
-
+			
 			if (isAuthenticated == true) {
 				loginpane.clearUsernameTextField();
 				loginpane.clearPasswordTextField();
-
 				TrayNotification successfulConnectionTray = new TrayNotification("CONNECTED STATUS",
 						"Successfully Connected", NotificationType.SUCCESS);
 				successfulConnectionTray.setAnimationType(AnimationType.POPUP);
 				successfulConnectionTray.showAndDismiss(Duration.millis(100));
-
-				applicationLoader.showRootView(); // this line switches the view
-													// to the main information
-													// panel
-
+				applicationLoader.showRootView(); // switch scene to main view
+													
 			} else {
-
 				TrayNotification errorConnectionTray = new TrayNotification("AUTHENTICATION FAILED",
 						"Please check your details", NotificationType.ERROR);
 				errorConnectionTray.setAnimationType(AnimationType.POPUP);
@@ -143,5 +108,7 @@ public class LoginController {
 
 		}
 	}
+
+	
 
 }
