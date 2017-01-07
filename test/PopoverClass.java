@@ -7,16 +7,16 @@ import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import pkgView.Users.ResetPane;
 
 public class PopoverClass extends Application {
 
     @Override
     public void start(Stage primaryStage) {
         PopOver popover = new PopOver();     
-        TextField campo = new TextField();      
+        ResetPane campo = new ResetPane();      
         popover.setContentNode(campo);
 
         Button btn = new Button();

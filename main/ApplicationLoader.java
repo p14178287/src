@@ -1,65 +1,77 @@
 package main;
 
-
 import java.util.List;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pkgController.LoginController;
-import pkgController.ToolHireDbController;
+import pkgController.ResetController;
+import pkgController.ManagerController;
 import pkgModel.Customer;
-import pkgView.LoginPane;
-import pkgView.RootPane;
 
-public class ApplicationLoader extends Application{
-	
-	private RootPane root;
+import pkgView.Users.LoginPane;
+import pkgView.Users.ManagerRootPane;
+import pkgView.Users.ResetPane;
+
+public class ApplicationLoader extends Application {
+
+	private ManagerRootPane managerRootpane;
 	private List<Customer> model;
 	private Stage stage;
 	private LoginPane login;
-	
+	private ResetPane reset;
+
 	public void init() {
-		
-		/* --APPROACH 2--
-		 * The view and model are decoupled. The controller is 
-		 * passed a reference to the model and view. Its job
-		 * is to attach event handlers to the view and ensure that
-		 * the model and view are updated appropriately. The 
-		 * benefit of this approach is that both the model and
-		 * view could easily be replaced with other implementations,
-		 * or worked on separately.
+
+		/*
+		 * --APPROACH 2-- The view and model are decoupled. The controller is
+		 * passed a reference to the model and view. Its job is to attach event
+		 * handlers to the view and ensure that the model and view are updated
+		 * appropriately. The benefit of this approach is that both the model
+		 * and view could easily be replaced with other implementations, or
+		 * worked on separately.
 		 */
 
-		root = new RootPane();
-
-		new ToolHireDbController(root, model);
+		managerRootpane = new ManagerRootPane();
+		new ManagerController(managerRootpane, model);
 
 		login = new LoginPane();
 		new LoginController(this, login, model);
+
+		reset = new ResetPane();
+		new ResetController(this, login, reset, model);
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
-		stage.setMinHeight(550);
-		stage.setMinWidth(850);
+		
+		//stage.set(true);
+		//stage.isShowing();
+		//stage.setFullScreen(true);
 		stage.setTitle("Database Tool Hire System");
-		this.setLoginView();
+		this.showLoginView();
 	}
 
-	public void setRosterView() {
-		stage.setScene(new Scene(root));
-		stage.show();
-	}
-
-	public void setLoginView() {
+	public void showLoginView() {
 		stage.setScene(new Scene(login));
 		stage.show();
 	}
-	
+
+	public void showRootView() {
+
+		stage.setScene(new Scene(managerRootpane));
+		stage.show();
+	}
+
+	public void showResetView() {
+		stage.setScene(new Scene(reset));
+		stage.show();
+	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
 
 }

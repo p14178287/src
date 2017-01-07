@@ -11,22 +11,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-public class ConnectDAO {
+public class DAOfunctions {
 
 	// private Button btnCancel;
 
 	private PreparedStatement preparedStatement;
 	private ResultSet resultSet;
 
-	private Connection myConnection;
+	private static Connection myConnection;
 	private PreparedStatement myPreparedStatement;
+	private Statement statement;
 	private ResultSet myResultSet;
 	public static String ActiveUser = "";
 
 	// private String = "";
 	public static String ACTIVEUSER = "";
 
-	public Connection connectDB() throws FileNotFoundException, IOException {
+	public static Connection connectDB() throws FileNotFoundException, IOException {
+
 		try {
 			// get the database properties for connection within a text file
 			Properties property = new Properties();
@@ -49,9 +51,19 @@ public class ConnectDAO {
 		return null;
 	}
 
+	/*
+	 * Instead of doing fresh connection to the database every time you need to
+	 * use a controller use the static method to pass on the connection around
+	 * the event handlers that way the user will need to connect once to the
+	 * database.
+	 */
+	public static final Connection passDBconnection() {
+		return myConnection;
+	}
+
 	/**
-	 * Sends the parameters captured from the user and checks it against the
-	 * values in the database by send a query to check. If they match then
+	 * Sends the parameters captured from the user and checks them against the
+	 * values in the database by sending a query to check. If they match then
 	 * authentication is successful.
 	 * 
 	 * @param username
@@ -90,6 +102,45 @@ public class ConnectDAO {
 		if (myConnection != null) {
 			myConnection.close();
 		}
+	}
+
+	public boolean isUsernameValid(String username, String userlevel) {
+		// check if username is the same as the one entered first
+
+		try {
+			String query = "SELECT Name, Userlevel FROM dbusers WHERE Name = ? and Userlevel = ?";
+			myConnection = connectDB();
+			myPreparedStatement = myConnection.prepareStatement(query);
+			myPreparedStatement.setString(1, username);
+			myPreparedStatement.setString(2, userlevel);
+			myResultSet = myPreparedStatement.executeQuery();
+			while (myResultSet.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+
+	}
+
+	public boolean updateNewpassword(String newPassword, String username, String userlevel) {
+		try {
+			String query = "UPDATE dbusers SET Password = ? WHERE Name=? and userlevel=?";
+			myConnection = connectDB();
+			myPreparedStatement = myConnection.prepareStatement(query);
+			myPreparedStatement.setString(1, newPassword);
+			myPreparedStatement.setString(2, username);
+			myPreparedStatement.setString(3, userlevel);
+			myPreparedStatement.executeUpdate();
+			
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+		return false;
+
 	}
 
 	private void QueryDB() {
