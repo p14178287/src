@@ -22,7 +22,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import pkgView.ButtonPanes.MGcustomerButtonPane;
 
-
 public class CustomerPane extends BorderPane {
 
 	private TextField customerID, customerSurname, customerMiddleName, CustomerEmail, customerPhoneNo;
@@ -30,7 +29,7 @@ public class CustomerPane extends BorderPane {
 	private Button searchBtn, viewAllCustomers;
 	private TextField searchTF;
 	private ListView<?> listView;
-	//private DBmenuBar dbMenubar;
+	// private DBmenuBar dbMenubar;
 
 	public CustomerPane() {
 
@@ -40,7 +39,7 @@ public class CustomerPane extends BorderPane {
 		 * 
 		 ****************************/
 
-		//dbMenubar = new DBmenuBar();
+		// dbMenubar = new DBmenuBar();
 
 		/************************************************
 		 * 
@@ -54,12 +53,12 @@ public class CustomerPane extends BorderPane {
 
 		Label headerLB = new Label("REGISTER NEW CUSTOMER");
 		headerLB.setAlignment(Pos.CENTER);
-		headerLB.setPadding(new Insets(10));
+		headerLB.setPadding(new Insets(10, 0, 10, 0));
 		headerLB.setFont(Font.font("Verdana", 16));
 
 		Label personalInfo = new Label("Enter Personal Information");
 		personalInfo.setAlignment(Pos.BASELINE_LEFT);
-		personalInfo.setPadding(new Insets(10));
+		personalInfo.setPadding(new Insets(10, 0, 10, 0));
 		personalInfo.setFont(Font.font("Verdana", 14));
 
 		// top heading
@@ -133,14 +132,13 @@ public class CustomerPane extends BorderPane {
 		// buttonpane.setPadding(new Insets(10, 5, 5, 5));
 		mGcustomerButtonPane.setAlignment(Pos.CENTER);
 
+		VBox.setVgrow(mGcustomerButtonPane, Priority.ALWAYS);
+
+		VBox.setVgrow(middleGridPane, Priority.ALWAYS);
+
 		vbox.getChildren().addAll(headerLBContainer, getSeparator(), subHeaderContainer, middleGridPane, getSeparator(),
 				mGcustomerButtonPane);
-		
-		VBox.setVgrow(mGcustomerButtonPane, Priority.ALWAYS);
-		
-		VBox.setVgrow(middleGridPane, Priority.ALWAYS);
-		//vbox.setPrefHeight(500);
-		
+
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setBorder(new Border(
 				new BorderStroke(Color.DARKGREY, new BorderStrokeStyle(null, null, null, 10, 0, null), null, null)));
@@ -156,6 +154,7 @@ public class CustomerPane extends BorderPane {
 		listView = new ListView();
 
 		listView.setPrefSize(1000, 600);
+		listView.setMinSize(600, 400);
 		listView.setBorder(new Border(
 				new BorderStroke(Color.DARKGREY, new BorderStrokeStyle(null, null, null, 10, 0, null), null, null)));
 
@@ -163,7 +162,7 @@ public class CustomerPane extends BorderPane {
 
 		searchLB.setPadding(new Insets(20));
 		searchTF = new TextField("Search here..");
-		
+
 		searchBtn = new Button("Search");
 		viewAllCustomers = new Button("View all Customers");
 
@@ -180,21 +179,55 @@ public class CustomerPane extends BorderPane {
 		VBox rightVBoxContainer = new VBox();
 		rightVBoxContainer.setPadding(new Insets(0, 0, 0, 7));
 		rightVBoxContainer.getChildren().addAll(topHBox, listView);
-		
 
-		/****************************************************
-		 * 
-		 * COLLECTION OF ALL CHILDREN IN THE MAIN BORDERPANE
-		 * 
-		 ****************************************************/
-		
 		this.setLeft(vbox);
 		this.setCenter(rightVBoxContainer);
-		
-		//this.setPrefSize(1000, 800);
-		this.setPadding(new Insets(0, 10, 10, 0));
-		
+		this.setMinSize(700, 600);
+		this.setPadding(new Insets(10));
+	}
 
+	/*--------------------------
+	 * PUBLIC INTERFACE METHODS
+	 *-------------------------*/
+
+	public final TextField getCustomerID() {
+		return customerID;
+	}
+	
+	public final TextField getCustomerSurname() {
+		return customerSurname;
+	}
+
+	public final TextField getCustomerMiddleName() {
+		return customerMiddleName;
+	}
+
+	public final TextField getCustomerEmail() {
+		return CustomerEmail;
+	}
+
+	public final TextField getCustomerPhoneNo() {
+		return customerPhoneNo;
+	}
+
+	public final MGcustomerButtonPane getmGcustomerButtonPane() {
+		return mGcustomerButtonPane;
+	}
+
+	public final Button getSearchBtn() {
+		return searchBtn;
+	}
+
+	public final Button getViewAllCustomers() {
+		return viewAllCustomers;
+	}
+
+	public final TextField getSearchTF() {
+		return searchTF;
+	}
+
+	public final ListView<?> getListView() {
+		return listView;
 	}
 
 	/*************************************************************************

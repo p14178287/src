@@ -6,10 +6,10 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pkgController.LoginController;
-import pkgController.ResetController;
 import pkgController.ManagerController;
+import pkgController.ResetController;
+import pkgController.paneSwitcherController;
 import pkgModel.Customer;
-
 import pkgView.Users.LoginPane;
 import pkgView.Users.ManagerRootPane;
 import pkgView.Users.ResetPane;
@@ -35,6 +35,8 @@ public class ApplicationLoader extends Application {
 
 		managerRootpane = new ManagerRootPane();
 		new ManagerController(managerRootpane, model);
+		
+		new paneSwitcherController(managerRootpane);
 
 		login = new LoginPane();
 		new LoginController(this, login, model);
@@ -46,10 +48,11 @@ public class ApplicationLoader extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
-		
-		//stage.set(true);
-		//stage.isShowing();
-		//stage.setFullScreen(true);
+
+		// stage.set(true);
+		// stage.isShowing();
+		// stage.setFullScreen(true);
+		stage.centerOnScreen();
 		stage.setTitle("Database Tool Hire System");
 		this.showLoginView();
 	}
@@ -62,11 +65,15 @@ public class ApplicationLoader extends Application {
 	public void showRootView() {
 
 		stage.setScene(new Scene(managerRootpane));
+		stage.centerOnScreen();
+		stage.setMinHeight(680);
+		stage.setMinWidth(1000);
 		stage.show();
 	}
 
 	public void showResetView() {
 		stage.setScene(new Scene(reset));
+		stage.centerOnScreen();
 		stage.show();
 	}
 

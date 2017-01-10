@@ -1,30 +1,26 @@
-
-
 #toolbar-box {
-	-fx-background-color: #3f65a3;
-	/*-fx-padding: 10.0;*/
+	-fx-background-color: #274f8e;
 	-fx-font-weight: bold;
 	-fx-text-fill: white;
 	-fx-font-size: 12.0px;
 }
 
 .button {
-
--fx-background-color: #3f65a3;
-        -fx-fit-to-width: true;
-/*-fx-background-insets: 0.0,1.0,2.0,3.0; 
--fx-background-radius: 3.0,2.0,2.0,2.0;*/
--fx-padding: 13.0;
--fx-font-weight: bold;
--fx-text-fill: white; 
--fx-font-size: 12.0px;
+	-fx-background-color: #274f8e;
+	-fx-padding: 13.0, 0, 25.0, 0;
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+	-fx-font-size: 12.0px;
+	
 }
 
 .button:hover {
-	-fx-background-color: #000000, linear-gradient(#7ebcea, #87cefa), radial-gradient(center 40% -40%, radius 200%, #7ebcea 30%, #426ab7 80%);
+	-fx-background-color: #000000, linear-gradient(#7ebcea, #87cefa),
+		radial-gradient(center 40% -40%, radius 200%, #7ebcea 30%, #426ab7 80%);
 	/*-fx-background-insets: 0.0, 1.0, 2.0, 3.0;
-	-fx-background-radius: 3.0, 2.0, 2.0, 2.0;
-	-fx-padding: 12.0 30.0 12.0 30.0;*/
+	-fx-background-radius: 3.0, 2.0, 2.0, 2.0;8*/
+	-fx-padding: 13.0, 0, 25.0, 0;
+	-fx-font-weight: bold;
 	-fx-text-fill: black;
 	-fx-font-size: 12.0px;
 }
@@ -33,4 +29,5 @@
 	-fx-font-size: 13.0;
 	-fx-padding: 10.0, 2.0, 20.0, 2.0;
 	-fx-text-fill: white;
+	-fx-text-align: center;
 }

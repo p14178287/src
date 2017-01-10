@@ -1,8 +1,10 @@
 package pkgView.Users;
 
 import javafx.animation.FadeTransition;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pkgView.ButtonPanes.DBmenuBar;
 import pkgView.ButtonPanes.VerticalToolBar;
@@ -16,55 +18,71 @@ public class ManagerRootPane extends BorderPane {
 	private ToolPane toolPane;
 	private ToolHirePane hirePane;
 	private DBmenuBar dbMenubar;
-	private VerticalToolBar toolbar;
+	private VerticalToolBar verticalToolBar;
 
 	public ManagerRootPane() {
 
-		/* Initialising view sub-containers fields for convenient access */
-//		VBox vbox = new VBox();
-//		vbox.setPrefSize(200, 600);
-//		vbox.setStyle("-fx-background-color: #345a99;");
-//		vbox.getChildren().add(toolbar = new VerticalToolBar());
-		
+		/*
+		 * instantiate all sub-panes that will be switched using the vertical
+		 * toolbar but only show one at a time when respectie button for each
+		 * pane is fired in the vertical toolbar
+		 */
 		customerPane = new CustomerPane();
-		toolbar = new VerticalToolBar();
-		
+		toolPane = new ToolPane();
+		hirePane = new ToolHirePane();
+		verticalToolBar = new VerticalToolBar();
+		dbMenubar = new DBmenuBar();
+
 		this.setPrefSize(1200, 900);
-		this.setLeft(toolbar);
-		this.setCenter(customerPane);
+		this.setTop(dbMenubar);
+		this.setLeft(verticalToolBar);
+		swapNode(getCustomerPane()); // call a switcher in there
+		
 	}
+	
 
 	public CustomerPane getCustomerPane() {
 		return customerPane;
 	}
 
-	public final DBmenuBar getDbMenubar() {
+	public DBmenuBar getDbMenubar() {
 		return dbMenubar;
 	}
 
-	public final ToolPane getToolPane() {
+	public ToolPane getToolPane() {
 		return toolPane;
 	}
 
-	public final ToolHirePane getHirePane() {
+	public ToolHirePane getToolHirePane() {
 		return hirePane;
 	}
+
+	public VerticalToolBar getVerticalToolBar() {
+		return verticalToolBar;
+	}
+   
+	// changing panes
+	public void swapNode(Node borderPane) {
+		fadeAnimation();
+		this.setCenter(borderPane);
+		}
+
+
+	/*-------------------------------------------
+	 * METHODS TO ATTACH EVENTHANDLERS TO BUTTONS
+	 *------------------------------------------*/
 
 	/*
 	 * animation fade effects used by the controller to give visual feedback of
 	 * certain operations
 	 */
-	public static void fadeAnimation() {
-		FadeTransition ft = new FadeTransition(Duration.millis(400));
+	public void fadeAnimation() {
+		FadeTransition ft = new FadeTransition(Duration.millis(600), this);
 		ft.setFromValue(1.0);
 		ft.setToValue(0.1);
 		ft.setCycleCount(2);
 		ft.setAutoReverse(true);
 		ft.play();
-	}
-
-	public VerticalToolBar getToolbar() {
-		return toolbar;
 	}
 
 }

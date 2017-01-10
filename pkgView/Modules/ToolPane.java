@@ -21,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import pkgView.ButtonPanes.MGcustomerButtonPane;
-import pkgView.ButtonPanes.DBmenuBar;
 
 public class ToolPane extends BorderPane {
 
@@ -52,12 +51,12 @@ public class ToolPane extends BorderPane {
 
 		/** TOP CHILD BORDERPANE **/
 
-		Label headerLB = new Label("REGISTER NEW CUSTOMER");
+		Label headerLB = new Label("REGISTER NEW TOOL");
 		headerLB.setAlignment(Pos.CENTER);
 		headerLB.setPadding(new Insets(10));
 		headerLB.setFont(Font.font("Verdana", 16));
 
-		Label personalInfo = new Label("Enter Personal Information");
+		Label personalInfo = new Label("Enter Tool Details");
 		personalInfo.setAlignment(Pos.BASELINE_LEFT);
 		personalInfo.setPadding(new Insets(10));
 		personalInfo.setFont(Font.font("Verdana", 14));
@@ -80,8 +79,8 @@ public class ToolPane extends BorderPane {
 		// MIDDLE CHILD BORDERPANE
 		GridPane middleGridPane = new GridPane();
 
-		Label customerIDLB = new Label("Customer ID");
-		Label customerSurnameLB = new Label("Surname");
+		Label toolIDLB = new Label("Tool ID");
+		Label toolNameLB = new Label("Tool Name");
 		Label customerMiddleNameLB = new Label("Middle Name");
 		Label CustomerEmailLB = new Label("Email Address");
 		Label customerPhoneNoLB = new Label("Email Address");
@@ -118,10 +117,10 @@ public class ToolPane extends BorderPane {
 		// middleGridPane.setPrefHeight(600);
 		middleGridPane.setAlignment(Pos.TOP_LEFT);
 
-		middleGridPane.add(customerIDLB, 0, 1);
+		middleGridPane.add(toolIDLB, 0, 1);
 		middleGridPane.add(customerID, 1, 1);
 
-		middleGridPane.add(customerSurnameLB, 0, 2);
+		middleGridPane.add(toolNameLB, 0, 2);
 		middleGridPane.add(customerSurname, 1, 2);
 
 		middleGridPane.add(customerMiddleNameLB, 0, 3);

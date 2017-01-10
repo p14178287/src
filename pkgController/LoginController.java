@@ -39,6 +39,7 @@ public class LoginController<applicationLoader> {
 
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
+	private MaskerPane progressPane;
 
 	public LoginController(ApplicationLoader applicationLoader, LoginPane view, List<Customer> model) {
 
@@ -59,7 +60,7 @@ public class LoginController<applicationLoader> {
 		 * new password. Notice the ResetController is instantiated in the
 		 * PopOver lambda.
 		 */
-		loginpane.getForgotPasswordHyperlink().setOnAction(e -> {
+		loginpane.getForgotPasswordHyperlink().setOnAction(event -> {
 			PopOver popover = new PopOver();
 			resetpane = new ResetPane();
 			resetcontroller = new ResetController(applicationLoader, loginpane, resetpane, null);
@@ -70,21 +71,22 @@ public class LoginController<applicationLoader> {
 
 		loginpane.getLoginBtn().setOnAction(event -> {
 
-			MaskerPane progressPane = loginpane.getMaskerPane();
+			progressPane = loginpane.getMaskerPane();
 
 			Task<ApplicationLoader> task = new Task<ApplicationLoader>() {
 
 				@Override
 				protected ApplicationLoader call() throws Exception {
 					progressPane.setVisible(true);
-					Thread.sleep(5000);
-					return null;
+					Thread.sleep(6000);
+					return applicationLoader;
+					
 				}
 
 				@Override
 				protected void succeeded() {
-					super.succeeded();
-					progressPane.setVisible(true);
+					//super.succeeded();
+					
 					checkCredentials();
 				}
 			};
@@ -123,9 +125,9 @@ public class LoginController<applicationLoader> {
 			 * Perhaps need a condition to decide switching to a managerRootPane
 			 * or common user
 			 */
-
 			// switch scene to main view
 			applicationLoader.showRootView();
+			progressPane.setVisible(true);
 		} else {
 			TrayNotification errorConnectionTray = new TrayNotification("AUTHENTICATION FAILED",
 					"Please check your details", NotificationType.ERROR);

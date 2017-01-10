@@ -13,8 +13,6 @@ import javafx.event.EventHandler;
 import main.ApplicationLoader;
 import pkgDAO.DAOfunctions;
 import pkgModel.Customer;
-import pkgView.ButtonPanes.MGcustomerButtonPane;
-import pkgView.ButtonPanes.VerticalToolBar;
 import pkgView.Modules.CustomerPane;
 import pkgView.Users.ManagerRootPane;
 
@@ -23,46 +21,51 @@ public class ManagerController {
 	 * Fields declared as global mutable variables so that they are accessible
 	 * throughout the whole class
 	 */
-	private ManagerRootPane view;
-	//private LoginPane loginWindow;
+	private ManagerRootPane managerRootPane;
 	private CustomerPane customerPane;
-	private LoginController accessDidierToGetTheBall;
-	private MGcustomerButtonPane leftTabButtons;
 	private List<Customer> model;
 	private Connection myConnection;
-	private DAOfunctions connectdao;
-	private String user, password, selectedLevelUser;
-	private static String encryptedpassword;
-	private boolean isAuthenticated;
 	private ApplicationLoader loader;
-	private VerticalToolBar toolBar;
-	
 
 	public ManagerController(ManagerRootPane managerRootPane, List<Customer> model) {
 
-		this.view = managerRootPane;
+		this.managerRootPane = managerRootPane;
 		this.model = model;
 
-		//loginWindow = view.getLoginPane();
 		customerPane = managerRootPane.getCustomerPane();
-		
-
-		// attach event handlers to view using private helper method
+		// attach event handlers to managerRootPane using private helper method
 		this.attachEventHandlers();
 	}
 
 	private void attachEventHandlers() {
-		//leftTabButtons.AttachViewAllCUstomersBtnEventHandler(new ViewAllCustomersBtnHandler());
+
+		// leftTabButtons.AttachViewAllCUstomersBtnEventHandler(new
+		//customerPane.ViewAllCustomersBtnHandler());
+
+	}
+
+	private class searchCustomerHandler implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			// TODO Auto-generated method stub
+
 		}
 
-	
+	}
+
 	private class ViewAllCustomersBtnHandler implements EventHandler<ActionEvent> {
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public void handle(ActionEvent event) {
-			
-			myConnection = DAOfunctions.passDBconnection(); //maintain the same connection by invoking the same static function that just returns myConnection
+
+			myConnection = DAOfunctions.passDBconnection(); // maintain the same
+															// connection by
+															// invoking the same
+															// static function
+															// that just returns
+															// myConnection
 
 			model = new ArrayList<Customer>();
 
@@ -82,7 +85,7 @@ public class ManagerController {
 
 				}
 
-				//view.fadeAnimation();
+				// view.fadeAnimation();
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -91,8 +94,6 @@ public class ManagerController {
 
 			}
 		}
-
-		
 
 	}
 
@@ -103,7 +104,6 @@ public class ManagerController {
 		String firstName = myResult.getString("dbCustomerLastName");
 		String address = myResult.getString("dbCustomerAddress");
 		String email = myResult.getString("dbEmailAddress");
-
 
 		Customer tempEmployee = new Customer(dbCustomerNo, lastName, firstName, address, email);
 
