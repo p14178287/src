@@ -1,10 +1,9 @@
 package pkgView.Users;
 
 import javafx.animation.FadeTransition;
-import javafx.scene.Group;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pkgView.ButtonPanes.DBmenuBar;
 import pkgView.ButtonPanes.VerticalToolBar;
@@ -23,7 +22,7 @@ public class ManagerRootPane extends BorderPane {
 	public ManagerRootPane() {
 
 		/*
-		 * instantiate all sub-panes that will be switched using the vertical
+		 * Instantiate all sub-panes that will be switched using the vertical
 		 * toolbar but only show one at a time when respectie button for each
 		 * pane is fired in the vertical toolbar
 		 */
@@ -33,7 +32,8 @@ public class ManagerRootPane extends BorderPane {
 		verticalToolBar = new VerticalToolBar();
 		dbMenubar = new DBmenuBar();
 
-		this.setPrefSize(1200, 900);
+		this.setPrefSize(1400, 900);
+		//this.setMargin(child, value);
 		this.setTop(dbMenubar);
 		this.setLeft(verticalToolBar);
 		swapNode(getCustomerPane()); // call a switcher in there
@@ -65,6 +65,7 @@ public class ManagerRootPane extends BorderPane {
 	public void swapNode(Node borderPane) {
 		fadeAnimation();
 		this.setCenter(borderPane);
+		//BorderPane.setMargin(borderPane, new Insets(5));
 		}
 
 
@@ -77,7 +78,7 @@ public class ManagerRootPane extends BorderPane {
 	 * certain operations
 	 */
 	public void fadeAnimation() {
-		FadeTransition ft = new FadeTransition(Duration.millis(600), this);
+		FadeTransition ft = new FadeTransition(Duration.millis(400), this);
 		ft.setFromValue(1.0);
 		ft.setToValue(0.1);
 		ft.setCycleCount(2);
