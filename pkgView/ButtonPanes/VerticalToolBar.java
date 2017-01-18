@@ -7,9 +7,6 @@ import org.controlsfx.glyphfont.FontAwesome.Glyph;
 import org.controlsfx.glyphfont.GlyphFont;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -63,24 +60,26 @@ public class VerticalToolBar extends VBox {
 	/*-------------------------------------------
 	 * METHODS TO ATTACH EVENTHANDLERS TO BUTTONS
 	 *------------------------------------------*/
-	
-	public void attach_customerBtn_Handler(EventHandler<ActionEvent> handler) {
-		customerBtn.setOnAction(handler);
-	}
-	
-	public void attach_ToolBtn_Handler(EventHandler<ActionEvent> handler) {
-		toolBtn.setOnAction(handler);
-	}
-	
-	public void attach_HireBtn_Handler(EventHandler<ActionEvent> handler) {
-		hireBtn.setOnAction(handler);
-	}
-	
-	public void attach_logBtn_Handler(EventHandler<ActionEvent> handler) {
-		logBtn.setOnAction(handler);
-	}
 
+	// TO DO: debating whether we need this or just stick to setOnAction	
 	
+//	public void attach_customerBtn_Handler(EventHandler<ActionEvent> handler) {
+//		customerBtn.setOnAction(handler);
+//	}
+//	
+//	public void attach_ToolBtn_Handler(EventHandler<ActionEvent> handler) {
+//		toolBtn.setOnAction(handler);
+//	}
+//	
+//	public void attach_HireBtn_Handler(EventHandler<ActionEvent> handler) {
+//		hireBtn.setOnAction(handler);
+//	}
+//	
+//	public void attach_logBtn_Handler(EventHandler<ActionEvent> handler) {
+//		logBtn.setOnAction(handler);
+//	}
+//
+//	
 	/*-------------------------------------------
 	 * PUBLIC INTERFACE METHODS 
 	 *------------------------------------------*/

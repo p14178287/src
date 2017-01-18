@@ -1,70 +1,71 @@
 package pkgModel;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class Customer {
 
-	private double customerID;
-	private String customerFirstName;
-	private String customerLastname;
-	private String customerAddress;
-	private String customerEmailAddress;
+	private SimpleDoubleProperty customerID;
+	private final SimpleStringProperty customerFirstName;
+	private final SimpleStringProperty customerLastname;
+	private final SimpleStringProperty customerAddress;
+	private final SimpleStringProperty customerEmailAddress;
 	
 	
 
 	public Customer() {
-		customerID = 0;
-		this.customerFirstName = "";
-		this.customerLastname = "";
+		
+		this(0, null, null, null, null);
 	}
 
 	public Customer(double customerID, String customerFirstName, String customerLastName, String customerAddress, String customerEmailAddress) {
-		this.customerID = customerID;
-		this.customerFirstName = customerFirstName;
-		this.customerLastname = customerLastName;
-		this.customerAddress = customerAddress;
-		this.customerEmailAddress = customerEmailAddress;
+		this.customerID = new SimpleDoubleProperty(customerID);
+		this.customerFirstName = new SimpleStringProperty (customerFirstName);
+		this.customerLastname = new SimpleStringProperty (customerLastName);
+		this.customerAddress = new SimpleStringProperty (customerAddress);
+		this.customerEmailAddress = new SimpleStringProperty (customerEmailAddress);
 	}
 
 	
 
 	public double getCustomerID() {
-		return customerID;
+		return customerID.get();
 	}
 
-	public void setCustomerID(double customerID) {
+	public void setCustomerID(SimpleDoubleProperty customerID) {
 		this.customerID = customerID;
 	}
 
 	public String getCustomerFirstName() {
-		return customerFirstName;
+		return customerFirstName.get();
 	}
 
 	public void setCustomerFirstName(String customerFirstName) {
-		this.customerFirstName = customerFirstName;
+		this.customerFirstName.set(customerFirstName);
 	}
 
 	public String getCustomerLastname() {
-		return customerLastname;
+		return customerLastname.get();
 	}
 
 	public void setCustomerLastname(String customerLastname) {
-		this.customerLastname = customerLastname;
+		this.customerLastname.set(customerLastname);
 	}
 	
 	public void setCustomerAddress(String customerAddress) {
-		this.customerAddress = customerAddress;
+		this.customerAddress.set(customerAddress);
 	}
 
 	public String getCustomerAddress() {
-		return customerAddress;
+		return customerAddress.get();
 	}
 	
 	public String getCustomerEmailAddress() {
-		return customerEmailAddress;
+		return customerEmailAddress.get();
 	}
 
 	public void setCustomerEmailAddress(String customerEmailAddress) {
-		this.customerEmailAddress = customerEmailAddress;
+		this.customerEmailAddress.set(customerEmailAddress);
 	}
 
 	@Override

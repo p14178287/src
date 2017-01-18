@@ -20,11 +20,7 @@ import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
-/**
- * Created by on 05/12/2016.
- * 
- * @param <applicationLoader>
- */
+
 public class LoginController<applicationLoader> {
 
 	private ResetPane resetpane;
@@ -71,7 +67,7 @@ public class LoginController<applicationLoader> {
 
 		loginpane.getLoginBtn().setOnAction(event -> {
 
-			progressPane = loginpane.getMaskerPane();
+			progressPane = loginpane.getMaskerPane(); // show a delaying window whilst the application initialises communication with the database
 
 			Task<ApplicationLoader> task = new Task<ApplicationLoader>() {
 
@@ -127,7 +123,7 @@ public class LoginController<applicationLoader> {
 			 */
 			// switch scene to main view
 			applicationLoader.showRootView();
-			progressPane.setVisible(true);
+			progressPane.setVisible(true); // show the MaskerPane again whilst establishing a connection to the database
 		} else {
 			TrayNotification errorConnectionTray = new TrayNotification("AUTHENTICATION FAILED",
 					"Please check your details", NotificationType.ERROR);

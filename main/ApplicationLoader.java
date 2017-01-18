@@ -1,8 +1,7 @@
 package main;
 
-import java.util.List;
-
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pkgController.LoginController;
@@ -17,11 +16,12 @@ import pkgView.Users.ResetPane;
 public class ApplicationLoader extends Application {
 
 	private ManagerRootPane managerRootpane;
-	private List<Customer> model;
+	private ObservableList<Customer> model;
 	private Stage stage;
 	private LoginPane login;
 	private ResetPane reset;
 
+	@SuppressWarnings("unchecked")
 	public void init() {
 
 		/*
@@ -48,10 +48,6 @@ public class ApplicationLoader extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
-
-		// stage.set(true);
-		// stage.isShowing();
-		// stage.setFullScreen(true);
 		stage.centerOnScreen();
 		stage.setTitle("Database Tool Hire System");
 		this.showLoginView();

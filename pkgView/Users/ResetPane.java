@@ -25,13 +25,13 @@ public class ResetPane extends GridPane {
 	private ComboBox<String> userLevelChoice;
 
 	public ResetPane() {
-		
+
 		// setup combobox
-				ObservableList<String> list = FXCollections.observableArrayList("Manager", "Administrator", "Clerk");
-				userLevelChoice = new ComboBox<String>(list);
-				userLevelChoice.getSelectionModel().select(0);
-				userLevelChoice.setPrefSize(140, 30);
-				
+		ObservableList<String> list = FXCollections.observableArrayList("Manager", "Administrator", "Clerk");
+		userLevelChoice = new ComboBox<String>(list);
+		userLevelChoice.getSelectionModel().select(0);
+		userLevelChoice.setPrefSize(140, 30);
+
 		resetBtn = new Button("Reset Password");
 
 		username = new TextField();
@@ -66,16 +66,16 @@ public class ResetPane extends GridPane {
 		this.add(reEnterNewPassword, 1, 2);
 		this.add(userType, 0, 3);
 		this.add(userLevelChoice, 1, 3);
-
 		this.add(resetBtn, 1, 4);
 
+		//Style the GridPane
 		this.setPrefSize(410, 300);
 		this.setVgap(20);
 		this.setHgap(20);
 		this.setAlignment(Pos.CENTER);
 		this.setPadding(new Insets(20, 5, 10, 20));
 		this.setAlignment(Pos.CENTER);
-		
+
 	}
 
 	public void attachResetBtnHandler(EventHandler<ActionEvent> handler) {
@@ -85,7 +85,7 @@ public class ResetPane extends GridPane {
 	public String getUsername() {
 		return username.getText();
 	}
-	
+
 	public String getUserLevelChoice() {
 		return userLevelChoice.getSelectionModel().getSelectedItem().toString();
 	}

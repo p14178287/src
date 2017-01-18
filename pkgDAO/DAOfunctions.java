@@ -13,19 +13,9 @@ import java.util.Properties;
 
 public class DAOfunctions {
 
-	// private Button btnCancel;
-
-	private PreparedStatement preparedStatement;
-	private ResultSet resultSet;
-
 	private static Connection myConnection;
-	private PreparedStatement myPreparedStatement;
-	private Statement statement;
+	private static PreparedStatement myPreparedStatement;
 	private ResultSet myResultSet;
-	public static String ActiveUser = "";
-
-	// private String = "";
-	public static String ACTIVEUSER = "";
 
 	public static Connection connectDB() throws FileNotFoundException, IOException {
 
@@ -33,7 +23,6 @@ public class DAOfunctions {
 			// get the database properties for connection within a text file
 			Properties property = new Properties();
 			// folder where the text file is located has been specified as sql
-			// folder
 			property.load(new FileInputStream("sql/ToolHiredb.properties"));
 			String user = property.getProperty("user");
 			String password = property.getProperty("password");
@@ -106,7 +95,6 @@ public class DAOfunctions {
 
 	public boolean isUsernameValid(String username, String userlevel) {
 		// check if username is the same as the one entered first
-
 		try {
 			String query = "SELECT Name, Userlevel FROM dbusers WHERE Name = ? and Userlevel = ?";
 			myConnection = connectDB();
@@ -128,20 +116,38 @@ public class DAOfunctions {
 
 	public boolean updateNewpassword(String newPassword, String username, String userlevel) {
 		try {
-			String query = "UPDATE dbusers SET Password = ? WHERE Name=? and userlevel=?";
+			String query = "UPDATE dbusers SET Password = ? WHERE Name=? and Userlevel=?";
 			myConnection = connectDB();
 			myPreparedStatement = myConnection.prepareStatement(query);
 			myPreparedStatement.setString(1, newPassword);
 			myPreparedStatement.setString(2, username);
 			myPreparedStatement.setString(3, userlevel);
 			myPreparedStatement.executeUpdate();
-			
+
 		} catch (Exception e) {
 			System.err.println(e);
 		}
 		return false;
 
 	}
+	// ******* FUNCTIONS TO UPDATE DATEBASE ************/
+
+	public static void updateNewValuesEntered(String customerFirstname, String customerLastname) {
+		try {
+			String query = "UPDATE customer SET dbCustomerFirstName = ? and dbCustomerLastName = ? WHERE dbCustomerFirstName = ? and dbCustomerLastName = ?";
+			// myConnection = connectDB();
+			myPreparedStatement = myConnection.prepareStatement(query);
+			myPreparedStatement.setString(1, customerFirstname);
+			myPreparedStatement.setString(2, customerLastname);
+			// myPreparedStatement.setDouble(3, customerID);
+			myPreparedStatement.executeUpdate();
+
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}
+
+	// ******* FUNCTIONS TO QUERY DATEBASE ************/
 
 	private void QueryDB() {
 		Statement myStatement = null;

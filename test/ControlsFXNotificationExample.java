@@ -4,13 +4,7 @@ package test;
 
 
 
-import org.controlsfx.control.Notifications;
-
 import com.sun.javafx.runtime.VersionInfo;
-
-import javafx.geometry.Pos;
-import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
 public class ControlsFXNotificationExample {
 	

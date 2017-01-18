@@ -1,7 +1,6 @@
 package pkgView.Users;
 
 import javafx.animation.FadeTransition;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
@@ -61,11 +60,10 @@ public class ManagerRootPane extends BorderPane {
 		return verticalToolBar;
 	}
    
-	// changing panes
+	// method to change panes
 	public void swapNode(Node borderPane) {
 		fadeAnimation();
 		this.setCenter(borderPane);
-		//BorderPane.setMargin(borderPane, new Insets(5));
 		}
 
 

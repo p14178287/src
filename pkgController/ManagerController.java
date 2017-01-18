@@ -5,109 +5,132 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
+import org.controlsfx.control.PopOver;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.util.Duration;
 import main.ApplicationLoader;
 import pkgDAO.DAOfunctions;
 import pkgModel.Customer;
 import pkgView.Modules.CustomerPane;
+import pkgView.Modules.EditCustomerDetailsPane;
 import pkgView.Users.ManagerRootPane;
 
 public class ManagerController {
-	/**
+	/* 
 	 * Fields declared as global mutable variables so that they are accessible
 	 * throughout the whole class
 	 */
 	private ManagerRootPane managerRootPane;
 	private CustomerPane customerPane;
-	private List<Customer> model;
+	private ObservableList<Customer> model;
 	private Connection myConnection;
 	private ApplicationLoader loader;
+	private EditCustomerDetailsPane editCustomerDetailsPane;
 
-	public ManagerController(ManagerRootPane managerRootPane, List<Customer> model) {
+	public ManagerController(ManagerRootPane managerRootPane, ObservableList<Customer> model) {
 
 		this.managerRootPane = managerRootPane;
 		this.model = model;
-
 		customerPane = managerRootPane.getCustomerPane();
 		// attach event handlers to managerRootPane using private helper method
 		this.attachEventHandlers();
 	}
 
-	private void attachEventHandlers() {
-
-		// leftTabButtons.AttachViewAllCUstomersBtnEventHandler(new
-		//customerPane.ViewAllCustomersBtnHandler());
-
+	private void attachEventHandlers() {		
+		customerPane.attachSearchlCustomersBtnHandler(new SearchCustomerBtnEventHandler());
 	}
 
-	private class searchCustomerHandler implements EventHandler<ActionEvent> {
-
+	
+	private class SearchCustomerBtnEventHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
-
-	private class ViewAllCustomersBtnHandler implements EventHandler<ActionEvent> {
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public void handle(ActionEvent event) {
-
-			myConnection = DAOfunctions.passDBconnection(); // maintain the same
-															// connection by
-															// invoking the same
-															// static function
-															// that just returns
-															// myConnection
-
-			model = new ArrayList<Customer>();
-
+			/*
+			 * Fetch all data from the database to be filtered and maintain same
+			 * database connection during controller execution DAOfunctions.passDBconnection()
+			 */
+			myConnection = DAOfunctions.passDBconnection(); 
 			Statement myStatement = null;
 			ResultSet myResult = null;
-
+			model = FXCollections.observableArrayList();
 			try {
 				myStatement = myConnection.createStatement();
 				myResult = myStatement.executeQuery("select * from Customer;");
-
 				while (myResult.next()) {
-
-					Customer tempEmployee = convertRowToEmployee(myResult);
-
-					customerPane.getDatabaseListView().getItems().add(tempEmployee);
-					model.forEach(c -> System.out.println(c));
-
+					/*
+					 * repeat process for each row until there is no more data
+					 * to populate
+					 */
+					addCustomerData(myResult);
 				}
-
-				// view.fadeAnimation();
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
+				System.out.println("sql error");
 				e.printStackTrace();
 			} finally {
+				/*
+				 * Wrap the ObservablearrayList in a FilteredList and initially
+				 * display all customer data.
+				 */
+				FilteredList<Customer> filteredData = new FilteredList<>(model, p -> true);
 
+				// Set the filter Predicate whenever the filter changes.
+				customerPane.getSearchTF().textProperty().addListener((observable, oldValue, newValue) -> {
+					filteredData.setPredicate(customer -> {
+						// If filter text is empty, display all persons.
+						if (newValue == null || newValue.isEmpty()) {
+							return true;
+						}
+						// Compare first name and last name of every customer
+						// with
+						// filter text.
+						String lowerCaseFilter = newValue.toLowerCase();
+
+						if (customer.getCustomerFirstName().toLowerCase().contains(lowerCaseFilter)) {
+							return true; // Filter matches first name.
+						} else if (customer.getCustomerLastname().toLowerCase().contains(lowerCaseFilter)) {
+							return true; // Filter matches last name.
+						}
+						return false; // Does not match.
+					});
+				});
+
+				// Wrapping the FilteredList in a SortedList.
+				SortedList<Customer> sortedData = new SortedList<>(filteredData);
+
+				// Bind the SortedList comparator to the TableView
+				// comparator.
+				sortedData.comparatorProperty().bind(customerPane.getTableView().comparatorProperty());
+
+				// Add sorted (and filtered) data to the table.
+				customerPane.getTableView().setItems(sortedData);
+				managerRootPane.fadeAnimation();
 			}
 		}
 
 	}
 
-	private Customer convertRowToEmployee(ResultSet myResult) throws SQLException {
+	/*
+	 * private method will grab all data from the database and map each value to
+	 * the model so variables so that it can be displayed in a friendly format
+	 * for the user.
+	 */
+	private final ObservableList<Customer> addCustomerData(ResultSet myResult) throws SQLException {
 
-		int dbCustomerNo = myResult.getInt("dbCustomerNo");
-		String lastName = myResult.getString("dbCustomerFirstName");
-		String firstName = myResult.getString("dbCustomerLastName");
+		double customerNo = myResult.getDouble("dbCustomerID");
+		String firstName = myResult.getString("dbCustomerFirstName");
+		String lastName = myResult.getString("dbCustomerLastName");
 		String address = myResult.getString("dbCustomerAddress");
 		String email = myResult.getString("dbEmailAddress");
 
-		Customer tempEmployee = new Customer(dbCustomerNo, lastName, firstName, address, email);
-
-		return tempEmployee;
+		model.add(new Customer(customerNo, firstName, lastName, address, email));
+		return model;
 	}
-
 }

@@ -1,13 +1,23 @@
 package pkgView.Modules;
 
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.table.TableRowExpanderColumn;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -20,18 +30,32 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
+import pkgModel.Customer;
 import pkgView.ButtonPanes.MGcustomerButtonPane;
 
 public class CustomerPane extends BorderPane {
 
 	private TextField customerID, customerSurname, customerMiddleName, CustomerEmail, customerPhoneNo;
 	private MGcustomerButtonPane mGcustomerButtonPane;
-	private Button searchBtn, viewAllCustomers;
-	private TextField searchTF;
-	private ListView<?> listView;
-	// private DBmenuBar dbMenubar;
+	private Button viewAllCustomersBtn, expandedSaveBtn;
+	private TextField filterTF;
 
-	public CustomerPane() {
+	private TableView<Customer> tableView;
+	private TableRow<Customer> tableRow;
+	private TableColumn<Customer, Double> customerIDCol;
+	private TableColumn<Customer, String> firstNameCol;
+	private TableColumn<Customer, String> lastNameCol;
+	private TableColumn<Customer, String> addressCol;
+	private TableColumn<Customer, String> emailCol;
+	private TableRowExpanderColumn<Customer> expander;
+	private ToggleButton toggleButtoon;
+	private TableColumn editCustomerDetailsCol;
+	private Hyperlink hyperlinkDetailEditor;
+	private EditCustomerDetailsPane editCustomerDetailsPane;
+
+	@SuppressWarnings("unchecked")
+	public <HyperLink> CustomerPane() {
 
 		/****************************
 		 * 
@@ -138,37 +162,86 @@ public class CustomerPane extends BorderPane {
 
 		vbox.getChildren().addAll(headerLBContainer, getSeparator(), subHeaderContainer, middleGridPane, getSeparator(),
 				mGcustomerButtonPane);
-
+		VBox.setVgrow(headerLBContainer, Priority.ALWAYS);
+		VBox.setVgrow(getSeparator(), Priority.ALWAYS);
+		VBox.setVgrow(subHeaderContainer, Priority.ALWAYS);
+		VBox.setVgrow(middleGridPane, Priority.ALWAYS);
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setBorder(new Border(
 				new BorderStroke(Color.DARKGREY, new BorderStrokeStyle(null, null, null, 10, 0, null), null, null)));
 
-		// BOTTON CHILD BORDERPANE
-
-		/************************************************
-		 * 
+		/**********************
 		 * RIGHT BORDERPANE
-		 * 
-		 ************************************************/
+		 **********************/
 
-		listView = new ListView();
+		/* Defining a TableView Popover for editing customer 
+		 * details --------------*/
 
-		listView.setPrefSize(1000, 600);
-		listView.setMinSize(600, 400);
-		listView.setBorder(new Border(
-				new BorderStroke(Color.DARKGREY, new BorderStrokeStyle(null, null, null, 10, 0, null), null, null)));
+		//hyperlinkDetailEditor = new Hyperlink("Edit Customer");
 
-		Label searchLB = new Label("Search for Customer");
+		tableView = new TableView<Customer>();
+		expander = new TableRowExpanderColumn<>(param -> {
+			HBox editor = new HBox(10);
+			hyperlinkDetailEditor = new Hyperlink("Edit Customer");
+		
+			hyperlinkDetailEditor.setOnAction(hyperlink -> {
+				
+				PopOver popover = new PopOver();
+				editCustomerDetailsPane = new EditCustomerDetailsPane();
+				popover.setContentNode(editCustomerDetailsPane);
+				popover.fadeInDurationProperty().set(Duration.millis(800));
+				popover.show(hyperlinkDetailEditor);			
+			});
+		
+			editor.getChildren().add(hyperlinkDetailEditor);
+			return editor;
+			
+		});
 
+		expander.setText("Edit");
+
+		tableView.getColumns().add(expander);
+
+		customerIDCol = new TableColumn<>("CustomerID");
+		customerIDCol.setMinWidth(70);
+		customerIDCol.setCellValueFactory(new PropertyValueFactory<Customer, Double>("CustomerID"));
+
+		firstNameCol = new TableColumn<>("First Name");
+		firstNameCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerFirstName"));
+		firstNameCol.setMinWidth(80);
+
+		lastNameCol = new TableColumn<>("Last Name");
+		lastNameCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerLastname"));
+		lastNameCol.setMinWidth(120);
+
+		addressCol = new TableColumn<>("Address");
+		addressCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerAddress"));
+		addressCol.setPrefWidth(200);
+
+		emailCol = new TableColumn<>("Email");
+		emailCol.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerEmailAddress"));
+		emailCol.setPrefWidth(200);
+
+		tableView.getColumns().addAll(customerIDCol, firstNameCol, lastNameCol, addressCol, emailCol);
+		tableView.setPrefSize(1000, 600);
+		tableView.setMinSize(400, 300);
+		// tableView.setBorder(new Border(
+		// new BorderStroke(Color.DARKGREY, new BorderStrokeStyle(null, null,
+		// null, 10, 0, null), null, null)));
+
+		/*------------TOP HBOX --------------*/
+		Label searchLB = new Label("Filter Customers:");
 		searchLB.setPadding(new Insets(20));
-		searchTF = new TextField("Search here..");
-
-		searchBtn = new Button("Search");
-		viewAllCustomers = new Button("View all Customers");
+		filterTF = new TextField();
+		filterTF.setMaxWidth(200);
+		viewAllCustomersBtn = new Button("View All Customers");
 
 		HBox topHBox = new HBox();
-		topHBox.setSpacing(20);
-		topHBox.getChildren().addAll(searchLB, searchTF, searchBtn, viewAllCustomers);
+		topHBox.setSpacing(10);
+		topHBox.getChildren().addAll(viewAllCustomersBtn, searchLB, filterTF);
+		HBox.setHgrow(searchLB, Priority.ALWAYS);
+		HBox.setHgrow(filterTF, Priority.ALWAYS);
+		HBox.setHgrow(viewAllCustomersBtn, Priority.ALWAYS);
 
 		topHBox.setBorder(new Border(
 				new BorderStroke(Color.DARKGREY, new BorderStrokeStyle(null, null, null, 10, 0, null), null, null)));
@@ -178,11 +251,12 @@ public class CustomerPane extends BorderPane {
 
 		VBox rightVBoxContainer = new VBox();
 		rightVBoxContainer.setPadding(new Insets(0, 0, 0, 7));
-		rightVBoxContainer.getChildren().addAll(topHBox, listView);
+		rightVBoxContainer.getChildren().addAll(topHBox, tableView);
+		// rightVBoxContainer.setMinSize(600, 500);
 
 		this.setLeft(vbox);
 		this.setCenter(rightVBoxContainer);
-		this.setMinSize(700, 600);
+		this.setMinSize(900, 600);
 		this.setPadding(new Insets(10));
 	}
 
@@ -193,17 +267,17 @@ public class CustomerPane extends BorderPane {
 	public final TextField getCustomerID() {
 		return customerID;
 	}
-	
+
 	public final TextField getCustomerSurname() {
 		return customerSurname;
 	}
 
-	public final TextField getCustomerMiddleName() {
-		return customerMiddleName;
+	public final String getCustomerMiddleName() {
+		return customerMiddleName.getText();
 	}
 
-	public final TextField getCustomerEmail() {
-		return CustomerEmail;
+	public final String getCustomerEmail() {
+		return CustomerEmail.getText();
 	}
 
 	public final TextField getCustomerPhoneNo() {
@@ -214,26 +288,115 @@ public class CustomerPane extends BorderPane {
 		return mGcustomerButtonPane;
 	}
 
-	public final Button getSearchBtn() {
-		return searchBtn;
-	}
-
-	public final Button getViewAllCustomers() {
-		return viewAllCustomers;
+	public final Button getViewAllCustomersBtn() {
+		return viewAllCustomersBtn;
 	}
 
 	public final TextField getSearchTF() {
-		return searchTF;
+		return filterTF;
 	}
 
-	public final ListView<?> getListView() {
-		return listView;
+	public final Hyperlink getHyperlink() {
+		return hyperlinkDetailEditor;
+	}
+
+	// public final TableView<Customer> getTableView() {
+	// return customerTableView;
+	//
+	// }
+
+	/*--------------------------------
+	 * PUBLIC INTERFACE FOR TABLEVIEW
+	 *-------------------------------*/
+	public TableColumn getEditCustomerDetailsCol() {
+		return editCustomerDetailsCol;
+	}
+
+	/**
+	 * @return the expander
+	 */
+	public TableRowExpanderColumn<Customer> getTableRowExpanderColumn() {
+		return expander;
+	}
+
+	public ToggleButton getToggleButton() {
+		return toggleButtoon;
+	}
+
+	/**
+	 * @return the customerIDCol
+	 */
+	public final TableColumn<Customer, Double> getCustomerIDCol() {
+		return customerIDCol;
+	}
+
+	/**
+	 * @return the firstNameCol
+	 */
+	public final TableColumn<Customer, String> getFirstNameCol() {
+		return firstNameCol;
+	}
+
+	/**
+	 * @return the lastNameCol
+	 */
+	public final TableColumn<Customer, String> getLastNameCol() {
+		return lastNameCol;
+	}
+
+	/**
+	 * @return the addressCol
+	 */
+	public final TableColumn<Customer, String> getAddressCol() {
+		return addressCol;
+	}
+
+	/**
+	 * @return the emailCol
+	 */
+	public final TableColumn<Customer, String> getEmailCol() {
+		return emailCol;
+	}
+
+	// TO DO: change all fetching methods on the textfields to return Strings **
+
+	/**
+	 * @return the tableViewSaveBtn
+	 */
+	public final Button getTableViewSaveBtn() {
+		return expandedSaveBtn;
+	}
+
+	/**
+	 * @return the tableExpanderTextfield
+	 */
+	// public final String getExpandedFirstnameValue() {
+	// return expandedFirstnameValue.getText();
+	// }
+	//
+	// /**
+	// * @return the lastnameText
+	// */
+	// public final String getLastnameValue() {
+	// return expandedLastnameValue.getText();
+	// }
+
+	/**
+	 * @return the customerTableView
+	 */
+	public final TableView<Customer> getTableView() {
+		return tableView;
+	}
+
+	/**
+	 * @return the tablerow
+	 */
+	public final TableRow<Customer> getTablerow() {
+		return tableRow;
 	}
 
 	/*************************************************************************
-	 * 
 	 * METHODS TO PROVIDE A PUBLIC INTERFACE FOR THE CONTROLLER AND THE ROOT
-	 * 
 	 *************************************************************************/
 
 	public Separator getSeparator() {
@@ -244,16 +407,16 @@ public class CustomerPane extends BorderPane {
 
 	}
 
-	public MGcustomerButtonPane getButtonPane() {
-		return mGcustomerButtonPane;
+	public void attachViewAllCustomersBtnHandler(EventHandler<ActionEvent> handler) {
+		viewAllCustomersBtn.setOnAction(handler);
 	}
 
-	public void setDatabaseListView(ListView databaseListView) {
-		this.listView = databaseListView;
-	};
+	public void attachSearchlCustomersBtnHandler(EventHandler<ActionEvent> handler) {
+		viewAllCustomersBtn.setOnAction(handler);
+	}
 
-	public ListView getDatabaseListView() {
-		return listView;
+	public MGcustomerButtonPane getButtonPane() {
+		return mGcustomerButtonPane;
 	}
 
 	public CustomerPane getInformationPane() {

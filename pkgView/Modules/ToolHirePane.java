@@ -21,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import pkgView.ButtonPanes.MGcustomerButtonPane;
-import pkgView.ButtonPanes.DBmenuBar;
 
 public class ToolHirePane extends BorderPane {
 

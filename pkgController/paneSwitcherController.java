@@ -1,9 +1,5 @@
 package pkgController;
 
-import java.awt.Button;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import pkgView.ButtonPanes.VerticalToolBar;
 import pkgView.Modules.CustomerPane;
 import pkgView.Modules.ToolHirePane;
@@ -63,7 +59,7 @@ public class paneSwitcherController {
 		});
 
 
-//		// attach all buttons in the vertical toolbar to the same EventHandler
+		// attach all buttons in the vertical toolbar to the same EventHandler
 //		verticalToolBar.attach_customerBtn_Handler(new switchScenesHandler());
 //		verticalToolBar.attach_ToolBtn_Handler(new switchScenesHandler());
 //		verticalToolBar.attach_HireBtn_Handler(new switchScenesHandler());
@@ -76,12 +72,12 @@ public class paneSwitcherController {
 //		@Override
 //		public void handle(ActionEvent event) {
 //			
-//			switch ((Node).toString()) {
+//			switch (event.getSource().toString()) {
 //			case "Customer":
 //				// switch to customer pane
 //				managerRootPane.swapNode(managerRootPane.getCustomerPane());
 //				break;
-//			case "Tool":
+//			case "toolBtn":
 //				managerRootPane.swapNode(managerRootPane.getToolPane());
 //				break;
 //			case "Hire Tool":

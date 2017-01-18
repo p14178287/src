@@ -1,14 +1,15 @@
 package test;
 
 
-	import javafx.application.Application;
-	import javafx.concurrent.Task;
-	import javafx.geometry.Pos;
-	import javafx.scene.Scene;
-	import javafx.scene.control.Button;
-	import javafx.scene.layout.VBox;
-	import javafx.stage.Stage;
 	import org.controlsfx.control.MaskerPane;
+
+import javafx.application.Application;
+import javafx.concurrent.Task;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 	public class MaskerPaneTest extends Application {
 	    @Override
