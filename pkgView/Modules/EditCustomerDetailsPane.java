@@ -9,14 +9,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
-public class EditCustomerDetailsPane extends GridPane {
+public class EditCustomerDetailsPane extends VBox {
 
-	private TextField customerID, customerFirstName, customerSurname, customerMiddleName, customerEmail, customerPhoneNo;
-	private Label customerIDLB, customerFirstNameLB, customerSurnameLB, customerMiddleNameLB, customerEmailLB, customerPhoneNoLB;
+	private TextField customerID, customerFirstName, customerSurname, customerAddress, customerEmail, customerPhoneNo;
+	private Label customerIDLB, customerFirstNameLB, customerSurnameLB, customerAddressLB, customerEmailLB, customerPhoneNoLB;
 	private Button saveCustomerEditedDetails;
 
 	public EditCustomerDetailsPane() {
+		
+		GridPane gridpane = new GridPane();
 
 		saveCustomerEditedDetails = new Button("Save Edited Details");
 
@@ -27,72 +30,73 @@ public class EditCustomerDetailsPane extends GridPane {
 		ColumnConstraints column2 = new ColumnConstraints();
 		column2.setHalignment(HPos.LEFT);
 		column2.setHgrow(Priority.ALWAYS); // grows all elements in 2nd column
-		this.getColumnConstraints().addAll(column0, column1, column2);
+		gridpane.getColumnConstraints().addAll(column0, column1, column2);
 
-		this.add(customerIDLB = new Label("Customer ID"), 0, 1);
-		this.add(customerID = new TextField(), 1, 1);
-		this.add(customerFirstNameLB = new Label("First Name"), 0, 2);
-		this.add(customerFirstName = new TextField(), 1, 2);
-		this.add(customerSurnameLB = new Label("last Name"), 0, 3);
-		this.add(customerSurname = new TextField(), 1, 3);
-		this.add(customerMiddleNameLB = new Label("Middle Name"), 0, 4);
-		this.add(customerMiddleName = new TextField(), 1, 4);
-		this.add(customerEmailLB = new Label("Email Address"), 0, 5);
-		this.add(customerEmail = new TextField(), 1, 5);
-		this.add(customerPhoneNoLB = new Label("Telephone No"), 0, 6);
-		this.add(customerPhoneNo = new TextField(), 1, 6);
-		this.add(saveCustomerEditedDetails, 0, 8);
+		gridpane.add(customerIDLB = new Label("Customer ID"), 0, 1);
+		gridpane.add(customerID = new TextField(), 1, 1);
+		gridpane.add(customerFirstNameLB = new Label("First Name"), 0, 2);
+		gridpane.add(customerFirstName = new TextField(), 1, 2);
+		gridpane.add(customerSurnameLB = new Label("last Name"), 0, 3);
+		gridpane.add(customerSurname = new TextField(), 1, 3);
+		gridpane.add(customerAddressLB = new Label("Address"), 0, 4);
+		gridpane.add(customerAddress = new TextField(), 1, 4);
+		gridpane.add(customerEmailLB = new Label("Email Address"), 0, 5);
+		gridpane.add(customerEmail = new TextField(), 1, 5);
+		gridpane.add(customerPhoneNoLB = new Label("Telephone No"), 0, 6);
+		gridpane.add(customerPhoneNo = new TextField(), 1, 6);
+		gridpane.add(saveCustomerEditedDetails, 0, 8);
 
 		//Style the GridPane
-		this.setPrefSize(410, 300);
-		this.setVgap(20);
-		this.setHgap(20);
-		this.setAlignment(Pos.CENTER);
-		this.setPadding(new Insets(20, 5, 10, 20));
-		this.setAlignment(Pos.CENTER);
+		gridpane.setPrefSize(410, 300);
+		gridpane.setVgap(20);
+		gridpane.setHgap(20);
+		gridpane.setAlignment(Pos.CENTER);
+		gridpane.setPadding(new Insets(20, 5, 10, 20));
+		gridpane.setAlignment(Pos.CENTER);
 		
+		this.getChildren().add(gridpane);
+		// this.getStylesheets().add(getClass().getResource("/pkgView/Css/popOver.css").toExternalForm());
+		// this.getStyleClass().add("popover");
+	
 	}
 
 	/**
 	 * @return the customerID
 	 */
-	public final String getCustomerID() {
-		return customerID.getText();
+	public TextField getCustomerID() {
+		return customerID;
 	}
-
-	/**
-	 * @return the customerFirstName
-	 */
-	public final String getCustomerFirstName() {
-		return customerFirstName.getText();
-	}
+	
+	public TextField getCustomerFirstName() {
+		return customerFirstName;
+		}
 
 	/**
 	 * @return the customerSurname
 	 */
-	public final String getCustomerSurname() {
-		return customerSurname.getText();
+	public final TextField getCustomerSurname() {
+		return customerSurname;
 	}
 
 	/**
 	 * @return the customerMiddleName
 	 */
-	public final String getCustomerMiddleName() {
-		return customerMiddleName.getText();
+	public TextField getCustomerAddress() {
+		return customerAddress;
 	}
 
 	/**
 	 * @return the customerEmail
 	 */
-	public final String getCustomerEmail() {
-		return customerEmail.getText();
+	public TextField getCustomerEmail() {
+		return customerEmail;
 	}
 
 	/**
 	 * @return the customerPhoneNo
 	 */
-	public final String getCustomerPhoneNo() {
-		return customerPhoneNo.getText();
+	public TextField getCustomerPhoneNo() {
+		return customerPhoneNo;
 	}
 
 	/**
@@ -119,8 +123,8 @@ public class EditCustomerDetailsPane extends GridPane {
 	/**
 	 * @return the customerMiddleNameLB
 	 */
-	public final Label getCustomerMiddleNameLB() {
-		return customerMiddleNameLB;
+	public final Label getCustomerAddressLB() {
+		return customerAddressLB;
 	}
 
 	/**

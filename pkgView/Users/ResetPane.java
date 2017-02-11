@@ -74,8 +74,6 @@ public class ResetPane extends GridPane {
 		this.setHgap(20);
 		this.setAlignment(Pos.CENTER);
 		this.setPadding(new Insets(20, 5, 10, 20));
-		this.setAlignment(Pos.CENTER);
-
 	}
 
 	public void attachResetBtnHandler(EventHandler<ActionEvent> handler) {

@@ -55,37 +55,11 @@ public class paneSwitcherController {
 		
 		verticalToolBar.getLogBtn().setOnAction(event -> {
 			managerRootPane.fadeAnimation();
-			managerRootPane.swapNode(managerRootPane.getToolPane()); //TO DO: need to create a LogPane		
+			managerRootPane.swapNode(managerRootPane.getToolPane()); 		
 		});
+		//TO DO: need to create a LogPane
 
 
-		// attach all buttons in the vertical toolbar to the same EventHandler
-//		verticalToolBar.attach_customerBtn_Handler(new switchScenesHandler());
-//		verticalToolBar.attach_ToolBtn_Handler(new switchScenesHandler());
-//		verticalToolBar.attach_HireBtn_Handler(new switchScenesHandler());
-//		verticalToolBar.attach_logBtn_Handler(new switchScenesHandler());
 	}
-	
-/*TO DO: until Thomas answers, we use setONAction for now for all the buttons*/
-//	public class switchScenesHandler implements EventHandler<ActionEvent> {
-//		
-//		@Override
-//		public void handle(ActionEvent event) {
-//			
-//			switch (event.getSource().toString()) {
-//			case "Customer":
-//				// switch to customer pane
-//				managerRootPane.swapNode(managerRootPane.getCustomerPane());
-//				break;
-//			case "toolBtn":
-//				managerRootPane.swapNode(managerRootPane.getToolPane());
-//				break;
-//			case "Hire Tool":
-//				// do something
-//				break;
-//			}
-//		}
-//
-//	}
 
 }

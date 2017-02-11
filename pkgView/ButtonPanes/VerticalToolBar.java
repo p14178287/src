@@ -15,9 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class VerticalToolBar extends VBox {
-
-	//private GlyphFont fontAwesome;
-	// private ToolBar toolBar;
+	
 	private Button customerBtn, toolBtn, hireBtn, logBtn;
 	private Label label;
 
@@ -29,7 +27,7 @@ public class VerticalToolBar extends VBox {
 	
 		label.setId("tool-label");
 		
-		customerBtn = new Button("Customer", fontAwesome.create(Glyph.USER).size(30).color(Color.WHITE));
+		customerBtn = new Button("Customer", fontAwesome.create(Glyph.USER).size(30).color(Color.PALEGREEN));
 		customerBtn.setContentDisplay(ContentDisplay.TOP);
 		customerBtn.setMaxWidth(Double.MAX_VALUE);
 		
@@ -58,33 +56,9 @@ public class VerticalToolBar extends VBox {
 	}
 	
 	/*-------------------------------------------
-	 * METHODS TO ATTACH EVENTHANDLERS TO BUTTONS
-	 *------------------------------------------*/
-
-	// TO DO: debating whether we need this or just stick to setOnAction	
-	
-//	public void attach_customerBtn_Handler(EventHandler<ActionEvent> handler) {
-//		customerBtn.setOnAction(handler);
-//	}
-//	
-//	public void attach_ToolBtn_Handler(EventHandler<ActionEvent> handler) {
-//		toolBtn.setOnAction(handler);
-//	}
-//	
-//	public void attach_HireBtn_Handler(EventHandler<ActionEvent> handler) {
-//		hireBtn.setOnAction(handler);
-//	}
-//	
-//	public void attach_logBtn_Handler(EventHandler<ActionEvent> handler) {
-//		logBtn.setOnAction(handler);
-//	}
-//
-//	
-	/*-------------------------------------------
 	 * PUBLIC INTERFACE METHODS 
 	 *------------------------------------------*/
-	
-	
+		
 	public final Button getCustomerBtn() {
 		return customerBtn;
 	}

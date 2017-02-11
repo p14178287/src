@@ -41,7 +41,6 @@ public class ResetController {
 
 	private void attachEventHandlers() {
 		resetpane.getResetBtn().setOnAction(e -> {
-
 			username = resetpane.getUsername();
 			userLevel = resetpane.getUserLevelChoice();
 			newPassword = resetpane.getNewPassword();
@@ -90,43 +89,4 @@ public class ResetController {
 			}
 		});
 	}
-
-	// private class ResetEventHandler implements EventHandler<ActionEvent> {
-	//
-	// public void handle(ActionEvent event) {
-	// // 1. fetch the new info entered by user
-	// username = resetpane.getUsername();
-	// userLevel = resetpane.getUserLevelChoice();
-	// newPassword = resetpane.getNewPassword();
-	// newReEnteredPassword = resetpane.getReEnteredPassword();
-	// System.out.println("ERROR CONNECTING");
-	// /*
-	// * 2. compare newPassword and ReEnteredpassword to ensure they are
-	// * the same if not then notify user
-	// * "new passwords do not match prompt to re-enter passwords."
-	// */
-	// ValidUsername = connectdao.isUsernameValid(username);
-	//
-	// if (ValidUsername == true) {
-	//
-	// try {
-	// encryptedpassword = AEScryption.encrypt(newReEnteredPassword);
-	// //myConnection = DAOfunctions.passDBconnection();
-	// connectdao.updateNewpassword(newPassword, username, userLevel);
-	//
-	// } catch (Exception e2) {
-	// e2.printStackTrace();
-	// System.out.println("error connecting");
-	// }
-	//
-	// } else {
-	// TrayNotification errorConnectionTray = new
-	// TrayNotification("AUTHENTICATION FAILED",
-	// "Please enter valid username", NotificationType.ERROR);
-	// errorConnectionTray.setAnimationType(AnimationType.POPUP);
-	// errorConnectionTray.showAndDismiss(Duration.millis(800));
-	// }
-	//
-	// }
-	// }
 }

@@ -30,13 +30,14 @@ public class DAOfunctions {
 
 			Connection myConnection = DriverManager.getConnection(dburl, user, password);
 
-			System.out.println("Connection Okay");
+			System.out.println("Connection Okay"); // for debugging
 
 			return myConnection;
 
 		} catch (SQLException ex) {
 			System.out.println("error connecting!");
 		}
+
 		return null;
 	}
 
@@ -130,24 +131,55 @@ public class DAOfunctions {
 		return false;
 
 	}
-	// ******* FUNCTIONS TO UPDATE DATEBASE ************/
+	// ******* FUNCTIONS TO UPDATE DATABASE ************/
 
-	public static void updateNewValuesEntered(String customerFirstname, String customerLastname) {
+	// TODO: finish populating all parameters into a query
+	public static void updateNewValuesEntered(Integer uniqueCustomerID, String updatedCustomerFirstName,
+			String updatedCustomerLastName, String updatedCustomerAddress, String updatedCustomerEmail,
+			Integer updatedCustomerPhoneNumber) {
 		try {
-			String query = "UPDATE customer SET dbCustomerFirstName = ? and dbCustomerLastName = ? WHERE dbCustomerFirstName = ? and dbCustomerLastName = ?";
+			String query = "UPDATE customer SET dbCustomerFirstName = ?, dbCustomerLastName = ?, dbCustomerAddress = ?, dbCustomerEmail = ?, dbCustomerPhoneNumber = ? WHERE dbcustomerID = ?";
 			// myConnection = connectDB();
 			myPreparedStatement = myConnection.prepareStatement(query);
-			myPreparedStatement.setString(1, customerFirstname);
-			myPreparedStatement.setString(2, customerLastname);
-			// myPreparedStatement.setDouble(3, customerID);
+			myPreparedStatement.setString(1, updatedCustomerFirstName);
+			myPreparedStatement.setString(2, updatedCustomerLastName);
+			myPreparedStatement.setString(3, updatedCustomerAddress);
+			myPreparedStatement.setString(4, updatedCustomerEmail);
+			myPreparedStatement.setInt(5, updatedCustomerPhoneNumber);
+			myPreparedStatement.setInt(6, uniqueCustomerID);
 			myPreparedStatement.executeUpdate();
-
+			System.out.println("successful update");
 		} catch (Exception e) {
+			System.out.println("error inserting values");
 			System.err.println(e);
 		}
 	}
 
-	// ******* FUNCTIONS TO QUERY DATEBASE ************/
+	public void insertNewCustomer(Integer id, String newCustomerFirstName, String newCustomerLastName,
+			String newCustomerAddress, String newCustomerEmail, Integer newCustomerPhoneNumber) {
+		try {
+			String query = "INSERT INTO customer (dbCustomerID, dbCustomerFirstName, dbCustomerLastName, dbCustomerAddress, dbCustomerEmail, dbCustomerPhoneNumber) "
+					+ " VALUES (?, ?, ?, ?, ?, ?)";
+					//+ "VALUES (dbCustomerID = ?, dbCustomerFirstName = ?, dbCustomerLastName = ?, dbCustomerAddress = ?, dbCustomerEmail = ?, dbCustomerPhoneNumber = ?)";
+			myConnection = connectDB();
+			myPreparedStatement = myConnection.prepareStatement(query);
+			myPreparedStatement.setInt(1, id);
+			myPreparedStatement.setString(2, newCustomerFirstName);
+			myPreparedStatement.setString(3, newCustomerLastName);
+			myPreparedStatement.setString(4, newCustomerAddress);
+			myPreparedStatement.setString(5, newCustomerEmail);
+			myPreparedStatement.setInt(6, newCustomerPhoneNumber);
+			myPreparedStatement.executeUpdate();
+			System.out.println("successful update");
+		} catch (Exception e) {
+			System.out.println("error inserting values");
+			System.err.println(e);
+		}
+
+		// return false;
+	}
+
+	// ******* FUNCTIONS TO QUERY DATABASE ************/
 
 	private void QueryDB() {
 		Statement myStatement = null;

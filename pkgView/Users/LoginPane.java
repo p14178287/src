@@ -248,11 +248,11 @@ public class LoginPane extends StackPane {
 		passWord.clear();
 	}
 
-	public void RequestTextFieldUsernameReFocus() {
+	public void requestTextFieldUsernameReFocus() {
 		userName.requestFocus();
 	}
 
-	public void RequestTextFieldPasswordReFocus() {
+	public void requestTextFieldPasswordReFocus() {
 		passWord.requestFocus();
 	}
 

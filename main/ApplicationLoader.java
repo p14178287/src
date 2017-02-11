@@ -43,6 +43,7 @@ public class ApplicationLoader extends Application {
 
 		reset = new ResetPane();
 		new ResetController(this, login, reset, model);
+		
 	}
 
 	@Override
