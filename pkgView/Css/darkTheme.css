@@ -1,0 +1,107 @@
+/* /* .table-view .column-header-background .filler {
+    -fx-background-color: #5fff79;
+} */
+/*
+DarkTheme.css
+ 
+.background {
+    -fx-background-color: #1d1d1d;
+}
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-opacity: 0.6;
+}
+
+.label-bright {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.label-header {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.table-view {
+    -fx-base: #1d1d1d;
+    -fx-control-inner-background: #1d1d1d;
+    -fx-background-color: #1d1d1d;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+ .table-view .column-header-background {
+    -fx-background-color: #21ff4f;
+} 
+
+.table-view .column-header, .table-view .filler {
+	-fx-background-color: #00df27;
+    -fx-size: 12;
+    -fx-border-width: 0 0 1 0;
+  	-fx-border-color:red; 
+  	-fx-table-cell-border-color: red;
+        
+  -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1; 
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+ */
+ 
+ .table-view{
+    -fx-background-color: transparent;
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: #262626;
+}
+
+
+.table-view .column-header .table-cell {
+    -fx-background-color: black;
+    
+}
+
+.table-view .table-cell{
+    -fx-text-fill: #0ed9e0;
+    -fx-alignment: center;
+    -fx-table-cell-border-color: #262626;
+}
+
+/* .table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #2b2a2a;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; 0
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #262626;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; 0
+} */
+
+.table-row-cell{
+-fx-border-color: red;
+-fx-table-cell-border-color:red;
+}

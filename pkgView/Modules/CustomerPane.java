@@ -1,6 +1,5 @@
 package pkgView.Modules;
 
-import org.controlsfx.control.table.TableRowExpanderColumn;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -53,13 +51,12 @@ public class CustomerPane extends BorderPane {
 	private TextField filterTF;
 
 	private TableView<Customer> tableView;
-	private TableRow<Customer> tableRow;
+
 	private TableColumn<Customer, Double> customerIDCol;
 	private TableColumn<Customer, String> firstNameCol;
 	private TableColumn<Customer, String> lastNameCol;
 	private TableColumn<Customer, String> addressCol;
 	private TableColumn<Customer, String> emailCol;
-	private TableRowExpanderColumn<Customer> expander;
 
 	@SuppressWarnings("unchecked")
 	public CustomerPane() {
@@ -429,7 +426,6 @@ public class CustomerPane extends BorderPane {
 		return spCustomerIDLB;
 	}
 
-	
 	public final Label getSpCustomerID() {
 		return spCustomerID;
 	}

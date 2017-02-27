@@ -7,6 +7,8 @@ import org.controlsfx.glyphfont.FontAwesome.Glyph;
 import org.controlsfx.glyphfont.GlyphFont;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -58,6 +60,9 @@ public class VerticalToolBar extends VBox {
 	/*-------------------------------------------
 	 * PUBLIC INTERFACE METHODS 
 	 *------------------------------------------*/
+	public void attachToolListsBtnHandler(EventHandler<ActionEvent> handler) {
+		toolBtn.setOnAction(handler);
+	}
 		
 	public final Button getCustomerBtn() {
 		return customerBtn;

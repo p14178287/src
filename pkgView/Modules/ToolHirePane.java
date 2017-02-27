@@ -33,19 +33,11 @@ public class ToolHirePane extends BorderPane {
 
 	public ToolHirePane() {
 
-		/****************************
-		 * 
-		 * TOP BORDERPANE CHILD
-		 * 
-		 ****************************/
 
-		//dbMenubar = new DBmenuBar();
 
-		/************************************************
-		 * 
-		 * LEFT BORDERPANE (containing a FlowPane)
-		 * 
-		 ************************************************/
+		/*****************************************
+		 * LEFT BORDERPANE (containing a FlowPane) 
+		 *****************************************/
 
 		VBox vbox = new VBox();
 
@@ -148,13 +140,10 @@ public class ToolHirePane extends BorderPane {
 		vbox.setBorder(new Border(
 				new BorderStroke(Color.DARKGREY, new BorderStrokeStyle(null, null, null, 10, 0, null), null, null)));
 
-		// BOTTON CHILD BORDERPANE
 
-		/************************************************
-		 * 
+		/******************
 		 * RIGHT BORDERPANE
-		 * 
-		 ************************************************/
+		 ******************/
 
 		listView = new ListView();
 
@@ -199,11 +188,9 @@ public class ToolHirePane extends BorderPane {
 
 	}
 
-	/*************************************************************************
-	 * 
+	/***********************************************************************
 	 * METHODS TO PROVIDE A PUBLIC INTERFACE FOR THE CONTROLLER AND THE ROOT
-	 * 
-	 *************************************************************************/
+	 ***********************************************************************/
 
 	public Separator getSeparator() {
 		final Separator separator = new Separator();
